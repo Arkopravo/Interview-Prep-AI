@@ -1,7 +1,9 @@
 import React, { useRef, useState } from "react";
 import { LuTrash, LuUpload, LuUser } from "react-icons/lu";
 
-const ProfilePhotoSelector = ({ image, setImage, preview, setPreview }) => {
+
+// To Do: Check the preview and setPreview case from parent
+const ProfilePhotoSelector = ({ image, setImage }) => {
   const inputRef = useRef(null);
   const [previewUrl, setPreviewUrl] = useState(null);
 
@@ -12,9 +14,9 @@ const ProfilePhotoSelector = ({ image, setImage, preview, setPreview }) => {
 
         const preview = URL.createObjectURL(file);
         console.log("Preview -> ",preview)
-        if(preview) {
-            setPreview(preview);
-        }
+        // if(preview) {
+        //     setPreview(preview);
+        // }
         setPreviewUrl(preview);
     }
   }
@@ -23,9 +25,9 @@ const ProfilePhotoSelector = ({ image, setImage, preview, setPreview }) => {
     setImage(null);
     setPreviewUrl(null);
 
-    if(setPreview) {
-        setPreview(null);
-    }
+    // if(setPreview) {
+    //     setPreview(null);
+    // }
   }
 
   const onChooseFile = () => {
@@ -56,7 +58,8 @@ const ProfilePhotoSelector = ({ image, setImage, preview, setPreview }) => {
     ) : (
         <div className="relative">
             <img
-                src={preview || previewUrl}
+                // src={preview || previewUrl}
+                src={previewUrl}
                 alt="profile photo"
                 className="w-20 h-20 rounded-full object-cover"
             />
