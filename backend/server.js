@@ -14,13 +14,21 @@ app.use(
             methods: ["GET", "POST", "PUT", "DELETE"],
             allowedHeaders: ["Content-Type", "Authorization"],
         }
-    )
+    ) 
 );
 
 
 connectDB();
 
 app.use(express.json());
+
+// Routes
+app.use("api/auth", authRoutes);
+// app.use("api/sessions", sessionRoutes);
+// app.use("api/questons". questionRoutes);
+
+// app.use("api/ai/generate-questions", protect, generateInterviewQuestions);
+// app.use("api/ai/generate-explanations", protect, generateConceptExplanation);
 
 
 // Serve upload folders
