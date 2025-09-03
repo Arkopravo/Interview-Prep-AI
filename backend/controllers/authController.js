@@ -47,13 +47,42 @@ const registerUser = async(req, res) => {
 
 
 const loginUser = async (req, res) => {
+    try {
+        const {email, password} = req.body;
+        const user = await User.findOne({email});
+        if(!user) {
+            return res.status(400).json({message: "Invalid Credentials"})
+        }
+        const isMatch = bcrypt.compare(password, user.password);
+        if(!isMatch) {
+            return res.status(400).json({message: "Invalid Credentials"})
+        }
 
+        return res.status(200).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            profileImageUrl: user.profileImageUrl,
+            token: generateToken(user._id),
+            message: "Login Successful"
+        })
+    } catch(error) {
+        res.status(500).json({message: "Server Error", error: error.message});
+    }
 }
 
 
 
 const getUserProfile = async (req, res) => {
-    
+    try {
+        const user = await User.findById(req.user.id).select("-password");
+        if(!user) {
+            return res.status(400).json({message: "Invalid User"});
+        }
+        return res.status(200).json(user);
+    } catch(error){
+        res.status(500).json({message: "Server Error", error: error.message});
+    }
 }
 
 
