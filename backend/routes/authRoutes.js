@@ -1,6 +1,7 @@
 const express = require("express");
 const { registerUser, loginUser, getUserProfile } = require("../controllers/authController");
 const { protect } = require("../middlewares/authMiddleware");
+const upload = require("../middlewares/uploadMiddleware");
 
 
 const router = express.Router();
@@ -15,6 +16,6 @@ router.post("/upload-image", upload.single("image"), (req, res) => {
     }
     const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
     res.status(200).json({imageUrl});
-})
+});
 
 module.exports = router;
