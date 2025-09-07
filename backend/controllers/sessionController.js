@@ -67,7 +67,12 @@ exports.getSessionById = async (req, res) => {
 
 exports.deleteSession = async (req, res) => {
     try {
-        const session = await Session.findById(req.params.id);
+
+        const sessionId = req.params.id.trim();   // remove extra spaces/newlines
+        const session = await Session.findById(sessionId);
+
+
+        // const session = await Session.findById(req.params.id);
         if(!session) {
             return res.status(401).json({message: 'Session not Found'});
         }
@@ -82,6 +87,7 @@ exports.deleteSession = async (req, res) => {
 
         res.status(200).json({message: "Session deleted successfully"});
     } catch (error) {
-        return res.status(400).json({success: false, message: "Server Error"});
+        console.error(error); 
+        return res.status(500).json({success: false, message: "Server Error"});
     }
 }
