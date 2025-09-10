@@ -1,6 +1,6 @@
 //TO DO:  Update Hero img here
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import HERO_IMG from "../assets/hero-img.jpg";
 import { useNavigate } from "react-router-dom";
 import { LuSparkles } from "react-icons/lu";
@@ -8,6 +8,8 @@ import { APP_FEATURES } from "./../utils/data";
 import SignUp from './Auth/SignUp';
 import Login from './Auth/Login';
 import Modal from "../components/Modal";
+import { UserContext } from "../context/userContext";
+import ProfileInfoCard from "../components/Cards/ProfileInfoCard";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -15,7 +17,15 @@ const LandingPage = () => {
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [currentPage, setCurrentPage] = useState("login");
 
-  const handleCTA = () => {};
+  const {user} = useContext(UserContext);
+
+  const handleCTA = () => {
+    if(!user) {
+      setOpenAuthModal(true);
+    } else {
+      navigate("/dashboard");
+    }
+  };
 
   return (
     <>
@@ -28,12 +38,19 @@ const LandingPage = () => {
             <div className="text-xl text-black font-bold">
               Interview Prep AI
             </div>
-            <button
-              className="bg-linear-to-r from-[#FF9324] to-[#e99a4b] text-sm font-semibold text-white px-7 py-2.5 rounded-full hover:bg-black hover:text-white border border-white transition-colors cursor-pointer"
-              onClick={() => setOpenAuthModal(true)}
-            >
-              Login / Sign Up
-            </button>
+            {
+              user ? 
+                (
+                  <ProfileInfoCard/>
+                ) : (
+                  <button
+                    className="bg-linear-to-r from-[#FF9324] to-[#e99a4b] text-sm font-semibold text-white px-7 py-2.5 rounded-full hover:bg-black hover:text-white border border-white transition-colors cursor-pointer"
+                    onClick={() => setOpenAuthModal(true)}
+                  >
+                    Login / Sign Up
+                  </button>
+                )
+              }
           </header>
 
           {/* Hero Content */}
