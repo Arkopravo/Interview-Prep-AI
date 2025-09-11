@@ -24,7 +24,8 @@ const Dashboard = () => {
   const fetchAllSessions = async () => {
     try {
       const response = await axiosInstance.get(API_PATHS.SESSION.GET_ALL);
-      setSessions(response.data);
+      console.log("Response -> ", response);
+      setSessions(response?.data?.sessions);
     } catch(error) {
       console.error("Error fetching session data", error);
     }
@@ -51,7 +52,7 @@ const Dashboard = () => {
               role={data?.role || ""}
               topicsToFocus={data?.topicsToFocus || ""}
               experience={data?.experience || "-"}
-              questions={data?.questions || "-"}
+              questions={data?.questions?.length || 0}
               description={data?.description || ""}
               lastUpdated={
                 data?.updatedAt 
@@ -72,6 +73,18 @@ const Dashboard = () => {
           Add New
         </button>
       </div>
+
+      <Modal
+        isOpen={openCreateModal}
+        onClose = {() => {
+          setOpenCreateModal(false);
+        }}
+        hideheader
+      >
+        <div>
+          <CreateSessionForm/>
+        </div>
+      </Modal>
     </DashboardLayout>
   )
 }
