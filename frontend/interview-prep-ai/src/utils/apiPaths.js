@@ -12,7 +12,7 @@
     },
     AI: {
         GENERATE_QUESTIONS: "/api/ai/generate-questions",
-        GENERATE_EXPLANATION: "/api/ai/generate-questions",
+        GENERATE_EXPLANATION: "/api/ai/generate-explanation",
     },
     SESSION: {
         CREATE: "/api/sessions/create",
